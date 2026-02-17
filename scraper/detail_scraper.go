@@ -22,10 +22,14 @@ func GetProductDetails(url string) (*model.Product, error) {
 	image, _ := doc.Find("img.img-responsive").Attr("src")
 	image = "https://webscraper.io" + image
 
+	priceText := strings.TrimSpace(doc.Find("h4.price").Text())
+	basePrice, _ := strconv.ParseFloat(strings.Replace(priceText, "$", "", 1), 64)
+
 	product := &model.Product{
 		Name:        strings.TrimSpace(doc.Find("h4.title").First().Text()),
 		Brand:       "Lenovo",
 		Description: doc.Find(".description").Text(),
+		BasePrice:   basePrice,
 		URL:         url,
 		Image:       image,
 	}

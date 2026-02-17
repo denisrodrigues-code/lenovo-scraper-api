@@ -8,6 +8,6 @@ import (
 
 func SortByCheapest(products []model.Product) {
 	sort.Slice(products, func(i, j int) bool {
-		return products[i].Storages[0].Price < products[j].Storages[0].Price
+		return products[i].BasePrice < products[j].BasePrice
 	})
 }

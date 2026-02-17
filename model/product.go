@@ -13,5 +13,6 @@ type Product struct {
 	Reviews     int             `json:"reviews"`
 	Image       string          `json:"image"`
 	URL         string          `json:"url"`
+	BasePrice   float64         `json:"base_price"`
 	Storages    []StorageOption `json:"storages"`
 }
