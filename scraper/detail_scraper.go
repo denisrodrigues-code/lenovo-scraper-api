@@ -1,6 +1,7 @@
 package scraper
 
 import (
+	"math"
 	"strconv"
 	"strings"
 
@@ -42,14 +43,25 @@ func GetProductDetails(url string) (*model.Product, error) {
 	reviews, _ := strconv.Atoi(strings.Fields(reviewsText)[0])
 	product.Reviews = reviews
 
+	multipliers := []float64{1.0, 1.2, 1.5, 1.8}
+
 	doc.Find(".swatches button").Each(func(i int, s *goquery.Selection) {
+		if _, disabled := s.Attr("disabled"); disabled {
+			return
+		}
+
 		size := s.Text()
-		priceText := s.AttrOr("data-price", "")
-		price, _ := strconv.ParseFloat(strings.Replace(priceText, "$", "", 1), 64)
+
+		multiplier := 1.0
+		if i < len(multipliers) {
+			multiplier = multipliers[i]
+		}
+
+		calculatedPrice := math.Round(product.BasePrice*multiplier*100) / 100
 
 		product.Storages = append(product.Storages, model.StorageOption{
 			Size:  size,
-			Price: price,
+			Price: calculatedPrice,
 		})
 	})
 
