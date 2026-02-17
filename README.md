@@ -21,7 +21,7 @@ API em **Golang** que realiza **web scraping** de notebooks Lenovo do site de te
 
 ---
 
-## Tecnologias
+## 🛠️ Tecnologias
 
 - Golang  
 - GoQuery (para parsing HTML)  
