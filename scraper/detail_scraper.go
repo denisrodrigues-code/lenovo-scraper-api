@@ -19,14 +19,18 @@ func GetProductDetails(url string) (*model.Product, error) {
 
 	doc, _ := goquery.NewDocumentFromReader(resp.Body)
 
+	image, _ := doc.Find("img.img-responsive").Attr("src")
+	image = "https://webscraper.io" + image
+
 	product := &model.Product{
-		Name:        strings.TrimSpace(doc.Find("h4").First().Text()),
+		Name:        strings.TrimSpace(doc.Find("h4.title").First().Text()),
 		Brand:       "Lenovo",
 		Description: doc.Find(".description").Text(),
 		URL:         url,
+		Image:       image,
 	}
 
-	doc.Find(".ratings .glyphicon-star").Each(func(i int, _ *goquery.Selection) {
+	doc.Find(".ws-icon-star").Each(func(i int, _ *goquery.Selection) {
 		product.Rating++
 	})
 
