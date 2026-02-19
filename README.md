@@ -65,8 +65,7 @@ cd lenovo-scraper-api
 go mod tidy
 
 # Executar API
-go run main.go
-A API estará disponível em: http://localhost:8080/lenovo
+go run cmd/api/main.go
 ```
 A API estará disponível em: http://localhost:8080/lenovo
 
